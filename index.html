@@ -86,14 +86,122 @@
   .pos { color: var(--muted); font-size: .85rem; margin-left: auto; }
   .footer-hint { color: var(--muted); font-size: .75rem; margin-top: .25rem; }
   code { background: var(--panel-2); padding: .1rem .35rem; border-radius: 4px; font-size: .8rem; }
+
+  .dataset-info {
+    max-width: 1100px; margin: 1rem auto; padding: 0 1rem 1.5rem;
+  }
+  .dataset-info section {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .dataset-info h2 {
+    font-size: .85rem; margin: 0 0 .75rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .dataset-stats {
+    display: flex; flex-wrap: wrap; gap: .75rem;
+  }
+  .stat-card {
+    background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px;
+    padding: .6rem 1rem; display: flex; flex-direction: column; gap: .2rem; min-width: 140px;
+  }
+  .stat-card .stat-value {
+    font-size: 1.35rem; font-weight: 700; color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-card .stat-label { font-size: .78rem; color: var(--muted); }
+
+  .info-text {
+    margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: .65rem;
+    font-size: .9rem; line-height: 1.7; color: var(--text);
+  }
+  .info-text p { margin: 0; }
+  .info-text a { color: var(--accent); text-decoration: none; }
+  .info-text a:hover { text-decoration: underline; }
+  .info-text strong { color: #f1f5f9; }
+  .info-text .wer-formula {
+    background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px;
+    padding: .6rem 1rem; font-family: monospace; font-size: .85rem; color: var(--accent);
+  }
+
+  /* Toggle */
+  .view-toggle {
+    display: flex; gap: .4rem; margin-bottom: .75rem;
+  }
+  .view-toggle button {
+    padding: .35rem .85rem; font-size: .85rem; border-radius: 6px;
+  }
+  .view-toggle button.active {
+    background: var(--accent); color: #0b1220; border-color: var(--accent); font-weight: 600;
+  }
+
+  /* Table view */
+  .table-wrap { overflow-x: auto; }
+  table.results {
+    width: 100%; border-collapse: collapse; font-size: .875rem;
+  }
+  table.results th {
+    text-align: left; padding: .5rem .75rem; font-size: .75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .8px; color: var(--muted);
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  table.results td {
+    padding: .5rem .75rem; border-bottom: 1px solid var(--border);
+    vertical-align: top; line-height: 1.4; word-break: break-word;
+  }
+  table.results tr:last-child td { border-bottom: none; }
+  table.results tr:hover td { background: var(--panel-2); }
+  table.results td.wer-col { white-space: nowrap; }
+  table.results td.real-col { color: #f1f5f9; }
+  table.results td.forecast-col { color: #fde68a; }
 </style>
 </head>
 <body>
 <header>
   <h1>🇹🇷 Türkçe Dudak Okuma — Sonuç İncele</h1>
-  <div class="meta" id="meta">yükleniyor…</div>
-</header>
 
+</header>
+<div class="dataset-info">
+  <section>
+    <h2>📊 Dataset Information</h2>
+    <div class="dataset-stats">
+      <div class="stat-card">
+        <span class="stat-value">132 hrs</span>
+        <span class="stat-label">Training data (Turkish)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">Turkish</span>
+        <span class="stat-label">Language</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">100.8%</span>
+        <span class="stat-label">Average WER (test set)</span>
+      </div>
+    </div>
+
+    <div class="info-text">
+      <p>
+        Bu proje, <strong>Görsel Konuşma Tanıma (VSR — Visual Speech Recognition)</strong> alanında
+        Türkçe için geliştirilmiş bir dudak okuma modelinin sonuçlarını görselleştirmektedir.
+        Model, <a href="https://github.com/mpc001/Visual_Speech_Recognition_for_Multiple_Languages" target="_blank" rel="noopener">Visual Speech Recognition for Multiple Languages</a>
+        kod tabanı temel alınarak  yaklaşık <strong>130 saatlik Türkçe video verisi</strong> üzerinde <strong>4 gün</strong> boyunca eğitilmiştir.
+      </p>
+      <p>
+        <strong>WER (Word Error Rate — Kelime Hata Oranı)</strong> nedir?
+        WER, modelin tahmininin gerçek metne ne kadar yakın olduğunu ölçen standart bir metriktir.
+        Tahmin edilen kelimeler ile gerçek kelimeler arasındaki ekleme, silme ve değiştirme işlemlerinin
+        toplam gerçek kelime sayısına oranı olarak hesaplanır:
+      </p>
+      <div class="wer-formula">WER = (Ekleme + Silme + Değiştirme) / Toplam Gerçek Kelime Sayısı × 100%</div>
+      <p>
+        <strong>%0</strong> mükemmel tahmin anlamına gelirken <strong>%100 ve üzeri</strong> modelin
+        metni büyük ölçüde yanlış tahmin ettiğini gösterir. %100'ü aşan değerler, gerçek metinden
+        daha fazla kelime üretildiğinde (ekleme fazlalığı) ortaya çıkabilir.
+      </p>
+    </div>
+  </section>
+</div>
 <main>
   <aside>
     <h2>Seçilen 100 video</h2>
@@ -101,30 +209,55 @@
   </aside>
 
   <section class="viewer">
-    <div class="video-wrap">
-      <video id="player" muted playsinline controls preload="metadata"></video>
+    <div class="view-toggle">
+      <button id="btn-video" class="active">▶ Video</button>
+      <button id="btn-table">☰ Tablo</button>
     </div>
 
-    <div class="row">
-      <span class="label">WER</span>
-      <span><span id="wer" class="wer-badge wer-bad">—</span></span>
-    </div>
-    <div class="row">
-      <span class="label">Gerçek</span>
-      <span class="value real" id="real">—</span>
-    </div>
-    <div class="row">
-      <span class="label">Tahmin</span>
-      <span class="value forecast" id="forecast">—</span>
+    <div id="video-view">
+      <div class="video-wrap">
+        <video id="player" muted playsinline controls preload="metadata"></video>
+      </div>
+
+      <div class="row">
+        <span class="label">WER</span>
+        <span><span id="wer" class="wer-badge wer-bad">—</span></span>
+      </div>
+      <div class="row">
+        <span class="label">Gerçek</span>
+        <span class="value real" id="real">—</span>
+      </div>
+      <div class="row">
+        <span class="label">Tahmin</span>
+        <span class="value forecast" id="forecast">—</span>
+      </div>
+
+      <div class="controls">
+        <button id="prev">← Önceki</button>
+        <button id="next">Sonraki →</button>
+        <span class="pos" id="pos"></span>
+      </div>
     </div>
 
-    <div class="controls">
-      <button id="prev">← Önceki</button>
-      <button id="next">Sonraki →</button>
-      <span class="pos" id="pos"></span>
+    <div id="table-view" style="display:none">
+      <div class="table-wrap">
+        <table class="results">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Gerçek</th>
+              <th>Tahmin</th>
+              <th>WER</th>
+            </tr>
+          </thead>
+          <tbody id="results-tbody"></tbody>
+        </table>
+      </div>
     </div>
   </section>
 </main>
+
+
 
 <script src="data.js"></script>
 <script src="selection.js"></script>
@@ -133,23 +266,21 @@
   const $ = (id) => document.getElementById(id);
   const list = $('list'), player = $('player');
   const real = $('real'), forecast = $('forecast'), werEl = $('wer');
-  const pos = $('pos'), meta = $('meta');
+  const pos = $('pos');
 
   const data = window.DATA, selection = window.SELECTION;
   if (!data || !selection) {
-    meta.textContent = 'Veri yüklenemedi (data.js / selection.js eksik).';
+    console.error('Veri yüklenemedi (data.js / selection.js eksik).');
     return;
   }
 
   let items, current = 0;
 
-  // Map index -> entry; selection contains video numbers (0..999)
-  const byIdx = new Map(data.items.map(it => [it.n, it]));
+  // Map by numeric video ID (matches selection values and video filenames)
+  const byId = new Map(data.items.map(it => [parseInt(it.id, 10), it]));
   items = selection
-    .map(n => byIdx.get(n))
+    .map(n => byId.get(n))
     .filter(Boolean);
-
-  meta.textContent = `${items.length} / ${selection.length} video • Avg WER: ${data.avg_wer}%`;
 
   function werClass(w) {
     if (w <= 30) return 'wer-good';
@@ -192,6 +323,39 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') show(current - 1);
     else if (e.key === 'ArrowRight') show(current + 1);
+  });
+
+  // Toggle video / table
+  const videoView = $('video-view'), tableView = $('table-view');
+  const btnVideo = $('btn-video'), btnTable = $('btn-table');
+
+  function renderTable() {
+    const tbody = $('results-tbody');
+    if (tbody.hasChildNodes()) return; // already rendered
+    items.forEach((it, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${it.id}</td>
+        <td class="real-col">${it.real || '—'}</td>
+        <td class="forecast-col">${it.forecast || '—'}</td>
+        <td class="wer-col"><span class="wer-badge ${werClass(it.wer)}">${it.wer.toFixed(1)}%</span></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  btnVideo.addEventListener('click', () => {
+    videoView.style.display = '';
+    tableView.style.display = 'none';
+    btnVideo.classList.add('active');
+    btnTable.classList.remove('active');
+  });
+
+  btnTable.addEventListener('click', () => {
+    renderTable();
+    videoView.style.display = 'none';
+    tableView.style.display = '';
+    btnVideo.classList.remove('active');
+    btnTable.classList.add('active');
   });
 
   renderList();
